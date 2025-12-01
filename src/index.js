@@ -398,6 +398,7 @@ export class PluginLoader {
    * Handle ignored plugin (targeting didn't match)
    */
   handleIgnore(plugin, reason, resolve) {
+    plugin.active = false;
     plugin.status = 'ignore';
     plugin.performance.status = 'ignore';
     plugin.performance.latency = calculateLatency(plugin.performance);

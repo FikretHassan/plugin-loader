@@ -488,6 +488,30 @@ loader.processConsentQueue();
 
 ---
 
+## SPA Re-evaluation
+
+On SPA navigation, re-evaluate plugins that didn't load on initial page:
+
+```javascript
+for (var key in pluginLoader.plugins) {
+    var plugin = pluginLoader.plugins[key];
+
+    if (
+        plugin &&
+        plugin.active === false &&
+        typeof plugin.name === 'string' &&
+        plugin.name.length > 0
+    ) {
+        plugin.active = true;
+        pluginLoader.load(plugin.name);
+    }
+}
+```
+
+Plugins that fail targeting will have `active` set back to `false` automatically.
+
+---
+
 ## Ready Topic (CMP Integration)
 
 To wait for a CMP or other initialization before loading plugins:
