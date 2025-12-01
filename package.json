@@ -1,0 +1,37 @@
+{
+  "name": "plugin-loader",
+  "version": "1.0.0",
+  "description": "Lightweight configurable tag management system for loading third-party scripts",
+  "main": "dist/plugin-loader.min.js",
+  "module": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.js prod",
+    "build:dev": "node scripts/build.js dev",
+    "build:esm": "node scripts/build.js esm",
+    "build:pubsub": "node scripts/build.js pubsub",
+    "build:all": "node scripts/build.js all",
+    "build:matrix": "node scripts/build-matrix.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FikretHassan/plugin-loader.git"
+  },
+  "keywords": [
+    "tag-manager",
+    "plugin-loader",
+    "advertising",
+    "targeting",
+    "consent",
+    "ab-testing"
+  ],
+  "author": "Fikret Hassan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/FikretHassan/plugin-loader/issues"
+  },
+  "homepage": "https://github.com/FikretHassan/plugin-loader#readme",
+  "devDependencies": {
+    "esbuild": "^0.19.0"
+  }
+}

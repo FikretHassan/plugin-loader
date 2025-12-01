@@ -1,0 +1,22 @@
+{
+  "url": {
+    "source": "window",
+    "path": "location.pathname",
+    "matchType": "startsWith"
+  },
+  "section": {
+    "source": "meta",
+    "key": "page-section",
+    "matchType": "startsWith"
+  },
+  "pagetype": {
+    "source": "window",
+    "path": "dataLayer.pageType",
+    "matchType": "exact"
+  },
+  "geo": {
+    "source": "cookie",
+    "key": "user_country",
+    "matchType": "exact"
+  }
+}
