@@ -189,19 +189,21 @@ const result = await loader.load(config);
 ## PubSub
 
 ### Description
-Lightweight publish/subscribe event system for decoupled communication. Tracks published topics for late subscribers.
+Lightweight publish/subscribe event system for decoupled communication. Tracks published topics so late subscribers can still receive events via `runIfAlreadyPublished`.
 
 ### Properties
 
 | Property | Type | Description |
 |----------|------|-------------|
 | `instanceId` | `string` | UUID v4 unique to this PubSub instance |
+| `topics` | `array` | Active subscriptions `[{token, topic, func}]` |
+| `publishedTopics` | `array` | History of published topic names |
 
 ### Functions
 
 | Method | Parameters | Returns | Description |
 |--------|------------|---------|-------------|
-| `subscribe({topic, func, runIfAlreadyPublished})` | Object | `string` | Subscribe to topic, returns unsubscribe token |
+| `subscribe({topic, func, runIfAlreadyPublished})` | Object | `string` | Subscribe to topic, returns token |
 | `unsubscribe({topic, token})` | Object | `boolean` | Unsubscribe using token |
 | `publish({topic, data})` | Object | - | Publish to topic with optional data |
 | `hasPublished(topic)` | `string` | `boolean` | Check if topic was ever published |
@@ -214,21 +216,29 @@ import { PubSub } from './src/index.js';
 
 const pubsub = new PubSub();
 
-// Subscribe
+// Subscribe to a topic
 const token = pubsub.subscribe({
   topic: 'cmp.ready',
   func: (data) => console.log('CMP ready', data),
-  runIfAlreadyPublished: true  // Execute immediately if already published
+  runIfAlreadyPublished: true  // If topic already published, execute immediately
 });
 
-// Publish
+// Publish to a topic
 pubsub.publish({ topic: 'cmp.ready', data: { consent: true } });
 
-// Check if published
+// Check if a topic has been published
 if (pubsub.hasPublished('cmp.ready')) { ... }
 
-// Unsubscribe
+// Unsubscribe using the token
 pubsub.unsubscribe({ topic: 'cmp.ready', token });
+
+// Debug: view all published topics
+console.log(window.PubSub.publishedTopics);
+// ['cmp.ready', 'plugin.analytics.load', 'plugin.analytics.complete', ...]
+
+// Debug: view active subscriptions
+console.log(window.PubSub.topics);
+// [{token: '0', topic: 'cmp.ready', func: ƒ}, ...]
 ```
 
 ### PluginLoader Events
