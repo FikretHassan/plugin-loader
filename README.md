@@ -512,6 +512,34 @@ Plugins that fail targeting will have `active` set back to `false` automatically
 
 ---
 
+## Dynamic Loading & Dependencies
+
+Load plugins inline without pre-configuration:
+
+```javascript
+pluginLoader.load({
+  name: 'myVendor',
+  url: 'https://cdn.example.com/vendor.js',
+  active: true,
+  domains: ['all'],
+  include: { section: ['all'] }
+});
+```
+
+Chain plugins with dependencies:
+
+```javascript
+PubSub.subscribe({
+  topic: 'plugin.vendorA.complete',
+  func: function() {
+    pluginLoader.load(vendorBConfig);
+  },
+  runIfAlreadyPublished: true
+});
+```
+
+---
+
 ## Ready Topic (CMP Integration)
 
 To wait for a CMP or other initialization before loading plugins:
