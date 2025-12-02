@@ -219,8 +219,10 @@ const pubsub = new PubSub();
 // Subscribe to a topic
 const token = pubsub.subscribe({
   topic: 'cmp.ready',
-  func: (data) => console.log('CMP ready', data),
-  runIfAlreadyPublished: true  // If topic already published, execute immediately
+  func: function(data) {
+    console.log('CMP ready', data);
+  },
+  runIfAlreadyPublished: true
 });
 
 // Publish to a topic
@@ -503,7 +505,7 @@ for (var key in pluginLoader.plugins) {
         plugin.name.length > 0
     ) {
         plugin.active = true;
-        pluginLoader.load(plugin.name);
+        pluginLoader.load(plugin);
     }
 }
 ```
